@@ -3,10 +3,9 @@ package pieces;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class Bishop extends Piece{
-    public Bishop(int row, int col, Color color,String icon){
-            playerColor = color;
-            pieceIcon = icon;
+public class Pawn extends Piece{
+    public Pawn(int row, int col, Color color, String icon){
+
     }
     @Override
     public ArrayList<ArrayList<Integer>> getValidMoves() {

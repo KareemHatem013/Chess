@@ -3,6 +3,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import static org.example.Grid.grid;
 
 public class GameActivity extends JFrame {
     private static final int BOARD_SIZE = 8; // 8x8 Chessboard
@@ -18,10 +20,6 @@ public class GameActivity extends JFrame {
         Color darkColor = new Color(181, 136, 99);  // Medium brown
         Color deepBlue = new Color(0x01, 0x32, 0x6C);
         Color onColor = new Color(1, 50, 108);
-        String[] firstRow = {"♜", "♞", "♝", "♛", "♚", "♝", "♞", "♜"};
-        String pawn = "♟";
-        int lastRowToggled = -1;
-        int lastColToggled = -1;
         for(int row = 0; row < 8;row++){
             for(int col =0; col< 8;col++){
                 buttons[row][col] = new JButton();
@@ -30,13 +28,10 @@ public class GameActivity extends JFrame {
                 }else{
                     buttons[row][col].setBackground(darkColor);
                 }
-                if(row == 0 || row == 7){
-                    buttons[row][col].setText(firstRow[col]);
-                }else if(row == 1 || row == 6){
-                    buttons[row][col].setText(pawn);
+                if(grid[row][col] != null){
+                    buttons[row][col].setText(grid[row][col].getPieceIcon());
+                    buttons[row][col].setForeground(grid[row][col].getPlayerColor());
                 }
-                if(row <= 1)buttons[row][col].setForeground(Color.BLACK);
-                else if(row >= 6)buttons[row][col].setForeground(deepBlue);
                 buttons[row][col].setFont(new Font("Serif", Font.PLAIN, 75));
                 panel.add(buttons[row][col]);
             }
@@ -64,6 +59,7 @@ public class GameActivity extends JFrame {
     }
     private void makeBold(int row,int col,Color deepBlue){
         // getValidCells
+        ArrayList<ArrayList<Integer>>validMoves = grid[row][col].getValidMoves();
         buttons[row][col].setBorder(BorderFactory.createLineBorder(deepBlue, 5));
         buttons[row-1][col].setBorder(BorderFactory.createLineBorder(deepBlue, 5));
         buttons[row-2][col].setBorder(BorderFactory.createLineBorder(deepBlue, 5));
