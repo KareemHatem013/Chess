@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class Rook extends Piece{
     public Rook(int row, int col, Color color, String icon){
-
+        super(row, col, color, icon);
     }
     @Override
     public ArrayList<ArrayList<Integer>> getValidMoves() {

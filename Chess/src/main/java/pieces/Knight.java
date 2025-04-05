@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class Knight extends Piece{
     public Knight(int row, int col, Color color, String icon){
-
+        super(row, col, color, icon);
     }
     @Override
     public ArrayList<ArrayList<Integer>> getValidMoves() {

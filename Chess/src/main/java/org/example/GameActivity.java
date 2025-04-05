@@ -9,6 +9,7 @@ import static org.example.Grid.grid;
 public class GameActivity extends JFrame {
     private static final int BOARD_SIZE = 8; // 8x8 Chessboard
     private JButton[][] buttons = new JButton[BOARD_SIZE][BOARD_SIZE]; // Store buttons
+    private int lastClickedRow = -1,lastClickedCol = -1;
     GameActivity() {
         super("Game Activity");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -34,21 +35,41 @@ public class GameActivity extends JFrame {
                 }
                 buttons[row][col].setFont(new Font("Serif", Font.PLAIN, 75));
                 panel.add(buttons[row][col]);
+                int finalRow = row;
+                int finalCol = col;
+                buttons[row][col].addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if(lastClickedRow == -1){
+                            resetBold();
+                            makeBold(finalRow, finalCol,deepBlue);
+                            lastClickedRow = finalRow;
+                            lastClickedCol = finalCol;
+                        }else{
+                            resetBold();
+                            // not null and cant move
+                            if(grid[lastClickedRow][lastClickedCol] != null){
+                                if(grid[lastClickedRow][lastClickedCol].canMoveTo(finalRow, finalCol)){
+                                    buttons[lastClickedRow][lastClickedCol].setText("");
+                                    buttons[finalRow][finalCol].setText(grid[lastClickedRow][lastClickedCol].getPieceIcon());
+                                    buttons[finalRow][finalCol].setForeground(grid[lastClickedRow][lastClickedCol].getPlayerColor());
+                                    grid[lastClickedRow][lastClickedCol].moveTo(finalRow, finalCol);
+                                }else{
+
+                                }
+                            }else if(grid[lastClickedRow][lastClickedCol]==null){
+                                makeBold(finalRow, finalCol,deepBlue);
+                            }
+                            lastClickedRow = -1;
+                            lastClickedCol = -1;
+                        }
+                        setVisible(true);
+                    }
+                });
             }
         }
         add(panel,BorderLayout.CENTER);
         setVisible(true);
-        for(int col = 0;col < 8;col++){
-            int finalRow = 6;
-            int finalCol = col;
-            buttons[6][col].addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    resetBold();
-                    makeBold(finalRow, finalCol,deepBlue);
-                }
-            });
-        }
     }
     private void resetBold(){
         for(int row = 0 ;row < 8;row++){
@@ -59,19 +80,14 @@ public class GameActivity extends JFrame {
     }
     private void makeBold(int row,int col,Color deepBlue){
         // getValidCells
+        if(grid[row][col] == null){
+            buttons[row][col].setBorder(BorderFactory.createLineBorder(deepBlue, 5));
+            return;
+        }
         ArrayList<ArrayList<Integer>>validMoves = grid[row][col].getValidMoves();
-        buttons[row][col].setBorder(BorderFactory.createLineBorder(deepBlue, 5));
-        buttons[row-1][col].setBorder(BorderFactory.createLineBorder(deepBlue, 5));
-        buttons[row-2][col].setBorder(BorderFactory.createLineBorder(deepBlue, 5));
-    }
-    private void setSelected(JButton button,int row,int col,Color onColor){
-        button.setBackground(onColor); // Set to "on" color
-    }
-    private void reset(JButton button,int row,int col,Color lightColor,Color darkColor){
-        if ((row + col) % 2 == 0) {
-            button.setBackground(lightColor);
-        } else {
-            button.setBackground(darkColor);
+        for(ArrayList<Integer> move : validMoves){
+            int x = move.get(0),y = move.get(1);
+            buttons[x][y].setBorder(BorderFactory.createLineBorder(deepBlue, 5));
         }
     }
 }
