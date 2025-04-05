@@ -51,11 +51,9 @@ public class GameActivity extends JFrame {
                             if(grid[lastClickedRow][lastClickedCol] != null){
                                 if(grid[lastClickedRow][lastClickedCol].canMoveTo(finalRow, finalCol)){
                                     buttons[lastClickedRow][lastClickedCol].setText("");
-                                    buttons[finalRow][finalCol].setText(grid[lastClickedRow][lastClickedCol].getPieceIcon());
                                     buttons[finalRow][finalCol].setForeground(grid[lastClickedRow][lastClickedCol].getPlayerColor());
                                     grid[lastClickedRow][lastClickedCol].moveTo(finalRow, finalCol);
-                                }else{
-
+                                    buttons[finalRow][finalCol].setText(grid[finalRow][finalCol].getPieceIcon());
                                 }
                             }else if(grid[lastClickedRow][lastClickedCol]==null){
                                 makeBold(finalRow, finalCol,deepBlue);
