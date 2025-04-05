@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 public class King extends Piece{
     public King(int row, int col, Color color, String icon){
+        super(row, col, color, icon);
 
     }
     @Override

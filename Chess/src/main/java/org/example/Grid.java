@@ -5,14 +5,14 @@ import java.awt.*;
 
 public class Grid {
     public static Piece [][]grid = new Piece [8][8];
-    public static Color firstPlayerColor = Color.BLACK;
-    public static Color secondPlayerColor = new Color(0x01, 0x32, 0x6C);
+    public static final int BOARD_SIZE = 8;
+    public static final Color firstPlayerColor = Color.BLACK;
+    public static final Color secondPlayerColor = new Color(0x01, 0x32, 0x6C);
     private static final String[] piecesIcon = {"♜", "♞", "♝", "♛", "♚", "♝", "♞", "♜"};
     private static final String pawn = "♟";
     public static void initializeGrid() {
-        // Example: Initialize with null or specific pieces
-        for (int row = 0; row < 8; row++) {
-            for (int col = 0; col < 8; col++) {
+        for (int row = 0; row < BOARD_SIZE; row++) {
+            for (int col = 0; col < BOARD_SIZE; col++) {
                 if(row == 0 || row == 7){
                     Color playerColor = (row == 0 ? secondPlayerColor : firstPlayerColor);
                     if(col == 0 || col == 7){
