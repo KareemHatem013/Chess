@@ -4,7 +4,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import static org.example.Grid.grid;
+
+import static org.example.Grid.*;
 
 public class GameActivity extends JFrame {
     private static final int BOARD_SIZE = 8; // 8x8 Chessboard
@@ -42,9 +43,11 @@ public class GameActivity extends JFrame {
                     public void actionPerformed(ActionEvent e) {
                         if(lastClickedRow == -1){
                             resetBold();
-                            makeBold(finalRow, finalCol,deepBlue);
-                            lastClickedRow = finalRow;
-                            lastClickedCol = finalCol;
+                            if(grid[finalRow][finalCol]!= null &&curPlayer == grid[finalRow][finalCol].getPlayerColor()){
+                                makeBold(finalRow, finalCol,deepBlue);
+                                lastClickedRow = finalRow;
+                                lastClickedCol = finalCol;
+                            }
                         }else{
                             resetBold();
                             // not null and cant move
@@ -53,6 +56,7 @@ public class GameActivity extends JFrame {
                                     buttons[lastClickedRow][lastClickedCol].setText("");
                                     buttons[finalRow][finalCol].setForeground(grid[lastClickedRow][lastClickedCol].getPlayerColor());
                                     grid[lastClickedRow][lastClickedCol].moveTo(finalRow, finalCol);
+                                    flipPlayer();
                                     buttons[finalRow][finalCol].setText(grid[finalRow][finalCol].getPieceIcon());
                                 }
                             }else if(grid[lastClickedRow][lastClickedCol]==null){

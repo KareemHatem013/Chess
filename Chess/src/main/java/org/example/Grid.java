@@ -9,7 +9,14 @@ public class Grid {
     public static final Color firstPlayerColor = Color.BLACK;
     public static final Color secondPlayerColor = new Color(0x01, 0x32, 0x6C);
     private static final String[] piecesIcon = {"♜", "♞", "♝", "♛", "♚", "♝", "♞", "♜"};
+    public static Color curPlayer = firstPlayerColor;
     private static final String pawn = "♟";
+    static void flipPlayer(){
+        if(curPlayer == firstPlayerColor){
+            curPlayer = secondPlayerColor;
+        }else
+            curPlayer = firstPlayerColor;
+    }
     public static void initializeGrid() {
         for (int row = 0; row < BOARD_SIZE; row++) {
             for (int col = 0; col < BOARD_SIZE; col++) {
