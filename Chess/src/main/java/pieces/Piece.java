@@ -1,13 +1,20 @@
 package pieces;
 
+import java.awt.*;
 import java.util.ArrayList;
-import org.example.Globals;
-abstract class Piece{
+
+abstract public class Piece{
     protected int row;
     protected int col;
-    protected Character playerColor;
-    abstract ArrayList<ArrayList<Integer>> getValidMoves();
-    abstract boolean canMoveTo(int row, int col);
-    abstract void moveTo(int row,int col);
-    abstract Character getPlayerColor();
+    protected Color playerColor;
+    protected String pieceIcon;
+    abstract public ArrayList<ArrayList<Integer>> getValidMoves();
+    abstract public boolean canMoveTo(int row, int col);
+    abstract public void moveTo(int row,int col);
+    public Color getPlayerColor(){
+        return playerColor;
+    }
+    public String getPieceIcon(){
+        return pieceIcon;
+    }
 }
